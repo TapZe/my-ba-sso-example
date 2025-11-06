@@ -34,7 +34,8 @@
     "db:start": "turbo -F @my-sso/db db:start",
     "db:watch": "turbo -F @my-sso/db db:watch",
     "db:stop": "turbo -F @my-sso/db db:stop",
-    "db:down": "turbo -F @my-sso/db db:down"
+    "db:down": "turbo -F @my-sso/db db:down",
+    "auth:generate": "turbo -F @my-sso/auth auth:generate"
   },
   "dependencies": {
     "dotenv": "^17.2.2",
