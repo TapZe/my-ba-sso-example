@@ -43,18 +43,26 @@ export const auth = betterAuth({
 	},
 	plugins: [
 		customSession(async ({ user, session }) => {
-			const userRole = await prisma.user.findUnique({
+			const userExtraData = await prisma.user.findUnique({
 				where: {
 					id: session.userId,
 				},
 				select: {
 					role: true,
+					banned: true,
+					banExpires: true,
+					banReason: true,
 				},
 			});
 
 			return {
-				roles: userRole?.role,
-				user,
+				user: {
+					...user,
+					role: userExtraData?.role,
+					banned: userExtraData?.banned,
+					banExpires: userExtraData?.banExpires,
+					banReason: userExtraData?.banReason,
+				},
 				session,
 			};
 		}),

@@ -15,6 +15,13 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
 			cause: "No session",
 		});
 	}
+	if (ctx.session.user?.banned) {
+		throw new TRPCError({
+			code: "UNAUTHORIZED",
+			message: "User banned",
+			cause: "User banned",
+		});
+	}
 	return next({
 		ctx: {
 			...ctx,
@@ -31,12 +38,19 @@ export const adminProcedure = t.procedure.use(({ ctx, next }) => {
 			cause: "No session",
 		});
 	}
-	const roles = ctx.session.roles?.split(",");
+	const roles = ctx.session.user?.role?.split(",");
 	if (!roles?.includes("admin")) {
 		throw new TRPCError({
 			code: "UNAUTHORIZED",
 			message: "Admin authentication required",
 			cause: "No session",
+		});
+	}
+	if (ctx.session.user?.banned) {
+		throw new TRPCError({
+			code: "UNAUTHORIZED",
+			message: "User banned",
+			cause: "User banned",
 		});
 	}
 	return next({
