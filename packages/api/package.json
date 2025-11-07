@@ -1,34 +1,34 @@
 {
-  "name": "@my-sso/api",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./src/index.ts"
-    },
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "default": "./src/*.ts"
-    }
-  },
-  "type": "module",
-  "scripts": {
-    "build": "tsdown"
-  },
-  "devDependencies": {
-    "@types/express": "catalog:",
-    "tsdown": "catalog:"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "dependencies": {
-    "@trpc/server": "catalog:",
-    "@trpc/client": "catalog:",
-    "better-auth": "catalog:",
-    "@prisma/client": "catalog:",
-    "dotenv": "catalog:",
-    "zod": "catalog:",
-    "@my-sso/auth": "workspace:*",
-    "@my-sso/db": "workspace:*"
-  }
+	"name": "@my-sso/api",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./src/index.ts"
+		},
+		"./*": {
+			"types": "./dist/*.d.ts",
+			"default": "./src/*.ts"
+		}
+	},
+	"type": "module",
+	"scripts": {
+		"build": "tsdown"
+	},
+	"devDependencies": {
+		"@types/express": "catalog:",
+		"tsdown": "catalog:"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"@trpc/server": "catalog:",
+		"@trpc/client": "catalog:",
+		"better-auth": "catalog:",
+		"@prisma/client": "catalog:",
+		"dotenv": "catalog:",
+		"zod": "catalog:",
+		"@my-sso/auth": "workspace:*",
+		"@my-sso/db": "workspace:*"
+	}
 }

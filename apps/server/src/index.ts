@@ -1,11 +1,11 @@
 import "dotenv/config";
-import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { createContext } from "@my-sso/api/context";
 import { appRouter } from "@my-sso/api/routers/index";
+import { auth } from "@my-sso/auth";
+import { createExpressMiddleware } from "@trpc/server/adapters/express";
+import { toNodeHandler } from "better-auth/node";
 import cors from "cors";
 import express from "express";
-import { auth } from "@my-sso/auth";
-import { toNodeHandler } from "better-auth/node";
 
 const app = express();
 

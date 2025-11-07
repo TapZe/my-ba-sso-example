@@ -1,6 +1,6 @@
+import { auth } from "@my-sso/auth";
 import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
 import { fromNodeHeaders } from "better-auth/node";
-import { auth } from "@my-sso/auth";
 
 export async function createContext(opts: CreateExpressContextOptions) {
 	const session = await auth.api.getSession({

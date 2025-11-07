@@ -1,9 +1,9 @@
-import { betterAuth, type BetterAuthOptions } from "better-auth";
-import { prismaAdapter } from "better-auth/adapters/prisma";
 import prisma from "@my-sso/db";
-import { admin, customSession } from "better-auth/plugins";
-import { hrAdminRole, adminRole, userRole, ac } from "./roles";
 import argon2 from "argon2";
+import { type BetterAuthOptions, betterAuth } from "better-auth";
+import { prismaAdapter } from "better-auth/adapters/prisma";
+import { admin, customSession } from "better-auth/plugins";
+import { ac, adminRole, hrAdminRole, userRole } from "./roles";
 
 const ARGON2_MEMORY_COST = Number(process.env.ARGON2_MEMORY_COST ?? 2 ** 16);
 const ARGON2_TIME_COST = Number(process.env.ARGON2_TIME_COST ?? 3);
@@ -43,21 +43,21 @@ export const auth = betterAuth<BetterAuthOptions>({
 	},
 	plugins: [
 		customSession(async ({ user, session }) => {
-            const userRole = await prisma.user.findUnique({
-                where: {
-                    id: session.userId,
-                },
+			const userRole = await prisma.user.findUnique({
+				where: {
+					id: session.userId,
+				},
 				select: {
 					role: true,
-				}
-            });
+				},
+			});
 
-            return {
-                roles: userRole?.role,
-                user,
-                session
-            };
-        }),
+			return {
+				roles: userRole?.role,
+				user,
+				session,
+			};
+		}),
 		admin({
 			ac,
 			roles: {
@@ -69,6 +69,6 @@ export const auth = betterAuth<BetterAuthOptions>({
 			defaultBanReason: "Suspicious activity detected",
 			defaultRole: "user",
 			bannedUserMessage: "You have been banned for suspicious activity",
-		})
+		}),
 	],
 });

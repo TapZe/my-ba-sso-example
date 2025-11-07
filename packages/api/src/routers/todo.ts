@@ -1,6 +1,6 @@
+import prisma from "@my-sso/db";
 import { TRPCError } from "@trpc/server";
 import z from "zod";
-import prisma from "@my-sso/db";
 import { protectedProcedure, publicProcedure, router } from "../index";
 
 export const todoRouter = router({
