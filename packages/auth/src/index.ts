@@ -10,7 +10,7 @@ const ARGON2_TIME_COST = Number(process.env.ARGON2_TIME_COST ?? 3);
 const ARGON2_PARALLELISM = Number(process.env.ARGON2_PARALLELISM ?? 1);
 const PASSWORD_PEPPER = process.env.PASSWORD_PEPPER ?? "";
 
-export const auth = betterAuth<BetterAuthOptions>({
+export const auth = betterAuth({
 	database: prismaAdapter(prisma, {
 		provider: "postgresql",
 	}),
@@ -63,7 +63,7 @@ export const auth = betterAuth<BetterAuthOptions>({
 			roles: {
 				admin: adminRole,
 				user: userRole,
-				hrAdmin: hrAdminRole,
+				hr_admin: hrAdminRole,
 			},
 			defaultBanExpiresIn: 60 * 60 * 24, // 1 day
 			defaultBanReason: "Suspicious activity detected",
@@ -71,4 +71,4 @@ export const auth = betterAuth<BetterAuthOptions>({
 			bannedUserMessage: "You have been banned for suspicious activity",
 		}),
 	],
-});
+} satisfies BetterAuthOptions);

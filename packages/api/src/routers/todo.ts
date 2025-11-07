@@ -1,7 +1,7 @@
 import prisma from "@my-sso/db";
 import { TRPCError } from "@trpc/server";
 import z from "zod";
-import { protectedProcedure, publicProcedure, router } from "../index";
+import { adminProcedure, protectedProcedure, publicProcedure, router } from "../index";
 
 export const todoRouter = router({
 	getAll: publicProcedure.query(async () => {
@@ -22,7 +22,7 @@ export const todoRouter = router({
 			});
 		}),
 
-	toggle: publicProcedure
+	toggle: protectedProcedure
 		.input(z.object({ id: z.number(), completed: z.boolean() }))
 		.mutation(async ({ input }) => {
 			try {
@@ -38,7 +38,7 @@ export const todoRouter = router({
 			}
 		}),
 
-	delete: protectedProcedure
+	delete: adminProcedure
 		.input(z.object({ id: z.number() }))
 		.mutation(async ({ input }) => {
 			try {
