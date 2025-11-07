@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import z from "zod";
 import prisma from "@my-sso/db";
-import { publicProcedure, router } from "../index";
+import { protectedProcedure, publicProcedure, router } from "../index";
 
 export const todoRouter = router({
 	getAll: publicProcedure.query(async () => {
@@ -38,7 +38,7 @@ export const todoRouter = router({
 			}
 		}),
 
-	delete: publicProcedure
+	delete: protectedProcedure
 		.input(z.object({ id: z.number() }))
 		.mutation(async ({ input }) => {
 			try {

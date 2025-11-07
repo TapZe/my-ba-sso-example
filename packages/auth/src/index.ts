@@ -1,7 +1,7 @@
 import { betterAuth, type BetterAuthOptions } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import prisma from "@my-sso/db";
-import { admin } from "better-auth/plugins";
+import { admin, customSession } from "better-auth/plugins";
 import { hrAdminRole, adminRole, userRole, ac } from "./roles";
 import argon2 from "argon2";
 
@@ -42,6 +42,22 @@ export const auth = betterAuth<BetterAuthOptions>({
 		},
 	},
 	plugins: [
+		customSession(async ({ user, session }) => {
+            const userRole = await prisma.user.findUnique({
+                where: {
+                    id: session.userId,
+                },
+				select: {
+					role: true,
+				}
+            });
+
+            return {
+                roles: userRole?.role,
+                user,
+                session
+            };
+        }),
 		admin({
 			ac,
 			roles: {
