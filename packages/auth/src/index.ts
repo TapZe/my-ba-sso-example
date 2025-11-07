@@ -2,7 +2,7 @@ import prisma from "@my-sso/db";
 import argon2 from "argon2";
 import { type BetterAuthOptions, betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { admin, customSession } from "better-auth/plugins";
+import { admin, customSession, jwt } from "better-auth/plugins";
 import { ac, adminRole, hrAdminRole, userRole } from "./roles";
 
 const ARGON2_MEMORY_COST = Number(process.env.ARGON2_MEMORY_COST ?? 2 ** 16);
@@ -70,5 +70,6 @@ export const auth = betterAuth({
 			defaultRole: "user",
 			bannedUserMessage: "You have been banned for suspicious activity",
 		}),
+		jwt()
 	],
 } satisfies BetterAuthOptions);
