@@ -29,7 +29,15 @@
 			"cache": false,
 			"persistent": true
 		},
+		"db:clean": {
+			"cache": false,
+			"persistent": true
+		},
 		"db:generate": {
+			"cache": false,
+			"persistent": true
+		},
+		"db:generate-full": {
 			"cache": false,
 			"persistent": true
 		},
