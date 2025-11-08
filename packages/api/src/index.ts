@@ -18,8 +18,8 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
 	if (ctx.session.user?.banned) {
 		throw new TRPCError({
 			code: "UNAUTHORIZED",
-			message: "User banned",
-			cause: "User banned",
+			message: "User banned!",
+			cause: ctx.session.user.banReason,
 		});
 	}
 	return next({
@@ -49,8 +49,8 @@ export const adminProcedure = t.procedure.use(({ ctx, next }) => {
 	if (ctx.session.user?.banned) {
 		throw new TRPCError({
 			code: "UNAUTHORIZED",
-			message: "User banned",
-			cause: "User banned",
+			message: "User banned!",
+			cause: ctx.session.user.banReason,
 		});
 	}
 	return next({
