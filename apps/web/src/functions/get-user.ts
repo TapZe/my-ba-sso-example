@@ -4,5 +4,8 @@ import { authMiddleware } from "@/middleware/auth";
 export const getUser = createServerFn({ method: "GET" })
 	.middleware([authMiddleware])
 	.handler(async ({ context }) => {
-		return context.session;
+		return {
+			session: context?.session,
+			jwtToken: context?.jwtToken,
+		};
 	});
