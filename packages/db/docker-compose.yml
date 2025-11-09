@@ -1,9 +1,9 @@
-name: my-sso
+name: my-ba-sso-example
 
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: my-sso-postgres
+    container_name: my-ba-sso-example-postgres
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -11,7 +11,7 @@ services:
     ports:
       - "${POSTGRES_PORT}:5432"
     volumes:
-      - my-sso_postgres_data:/var/lib/postgresql
+      - my-ba-sso-example_postgres_data:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 10s
@@ -20,4 +20,4 @@ services:
     restart: unless-stopped
 
 volumes:
-  my-sso_postgres_data:
+  my-ba-sso-example_postgres_data:
