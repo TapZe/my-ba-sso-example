@@ -78,6 +78,6 @@ export const auth = betterAuth({
 			defaultRole: "user",
 			bannedUserMessage: "You have been banned for suspicious activity",
 		}),
-		jwt()
+		jwt(),
 	],
 } satisfies BetterAuthOptions);

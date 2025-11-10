@@ -10,7 +10,7 @@ export const authMiddleware = createMiddleware().server(
 				throw: true,
 				onSuccess: (ctx) => {
 					jwtToken = ctx.response.headers.get("set-auth-jwt") || "";
-				}
+				},
 			},
 		});
 

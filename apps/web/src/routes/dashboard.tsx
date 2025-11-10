@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createRemoteJWKSet, jwtVerify } from "jose";
 import { getUser } from "@/functions/get-user";
 import { useTRPC } from "@/utils/trpc";
-import { jwtVerify, createRemoteJWKSet } from 'jose'
 
 export const Route = createFileRoute("/dashboard")({
 	component: RouteComponent,
@@ -10,16 +10,20 @@ export const Route = createFileRoute("/dashboard")({
 		const { session, jwtToken } = await getUser();
 
 		// the token should be sent by the fe to the other be then verified using this
-		if(jwtToken) {
+		if (jwtToken) {
 			const JWKS = createRemoteJWKSet(
-				new URL(`${import.meta.env.VITE_SSO_URL}/api/auth/jwks`)
-			)
-			const { payload, protectedHeader, key } = await jwtVerify(jwtToken, JWKS, {
-				issuer: import.meta.env.VITE_SSO_URL, // Should match your JWT issuer, which is the BASE_URL
-				audience: import.meta.env.VITE_SSO_URL, // Should match your JWT audience, which is the BASE_URL by default
-			})
+				new URL(`${import.meta.env.VITE_SSO_URL}/api/auth/jwks`),
+			);
+			const { payload, protectedHeader, key } = await jwtVerify(
+				jwtToken,
+				JWKS,
+				{
+					issuer: import.meta.env.VITE_SSO_URL, // Should match your JWT issuer, which is the BASE_URL
+					audience: import.meta.env.VITE_SSO_URL, // Should match your JWT audience, which is the BASE_URL by default
+				},
+			);
 
-			console.log("JWT", {payload, protectedHeader, key});
+			console.log("JWT", { payload, protectedHeader, key });
 		}
 
 		return { session, jwtToken };

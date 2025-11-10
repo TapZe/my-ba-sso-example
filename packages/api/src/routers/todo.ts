@@ -1,7 +1,12 @@
 import prisma from "@my-sso/db";
 import { TRPCError } from "@trpc/server";
 import z from "zod";
-import { adminProcedure, protectedProcedure, publicProcedure, router } from "../index";
+import {
+	adminProcedure,
+	protectedProcedure,
+	publicProcedure,
+	router,
+} from "../index";
 
 export const todoRouter = router({
 	getAll: publicProcedure.query(async () => {
