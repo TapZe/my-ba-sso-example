@@ -9,7 +9,7 @@ export const Route = createFileRoute("/dashboard")({
 	beforeLoad: async () => {
 		const { session, jwtToken } = await getUser();
 
-		// the token should be sent by the fe to the other be then verified using this
+		// // the token should be sent by the fe to the other be then verified using this
 		// if (jwtToken) {
 		// 	const JWKS = createRemoteJWKSet(
 		// 		new URL(`http://localhost:3000/api/auth/jwks`),
