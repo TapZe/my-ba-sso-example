@@ -103,6 +103,7 @@ export const auth = betterAuth({
 		},
 	},
 	advanced: {
+		cookiePrefix: process.env.BETTER_AUTH_COOKIE_PREFIX,
 		defaultCookieAttributes: {
 			sameSite: "none",
 			secure: true,

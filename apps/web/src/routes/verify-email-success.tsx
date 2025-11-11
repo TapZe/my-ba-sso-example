@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { CheckCircle2, Mail, ArrowRight, Home } from "lucide-react";
+import { ArrowRight, CheckCircle2, Home, Mail } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/verify-email-success")({
@@ -27,16 +27,16 @@ function VerifyEmailSuccess() {
 	}, [navigate]);
 
 	return (
-		<div className="min-h-screen bg-linear-to-br from-purple-50 via-white to-blue-50 flex items-center justify-center p-4">
-			<div className="max-w-md w-full">
+		<div className="flex min-h-screen items-center justify-center bg-linear-to-br from-purple-50 via-white to-blue-50 p-4">
+			<div className="w-full max-w-md">
 				{/* Success Card */}
-				<div className="bg-white rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-[1.02]">
+				<div className="transform overflow-hidden rounded-2xl bg-white shadow-2xl transition-all duration-500 hover:scale-[1.02]">
 					{/* Header with gradient */}
 					<div className="bg-linear-to-r from-purple-600 to-blue-600 p-8 text-center">
-						<div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full mb-4 animate-bounce">
-							<CheckCircle2 className="w-12 h-12 text-green-500" />
+						<div className="mb-4 inline-flex h-20 w-20 animate-bounce items-center justify-center rounded-full bg-white">
+							<CheckCircle2 className="h-12 w-12 text-green-500" />
 						</div>
-						<h1 className="text-3xl font-bold text-white mb-2">
+						<h1 className="mb-2 font-bold text-3xl text-white">
 							Email Verified!
 						</h1>
 						<p className="text-purple-100">
@@ -46,13 +46,11 @@ function VerifyEmailSuccess() {
 
 					{/* Content */}
 					<div className="p-8">
-						<div className="flex items-start gap-4 mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-							<Mail className="w-6 h-6 text-green-600 shrink-0 mt-0.5" />
+						<div className="mb-6 flex items-start gap-4 rounded-lg border border-green-200 bg-green-50 p-4">
+							<Mail className="mt-0.5 h-6 w-6 shrink-0 text-green-600" />
 							<div>
-								<h3 className="font-semibold text-green-900 mb-1">
-									All Set!
-								</h3>
-								<p className="text-sm text-green-700">
+								<h3 className="mb-1 font-semibold text-green-900">All Set!</h3>
+								<p className="text-green-700 text-sm">
 									You can now access all features of your account. Welcome
 									aboard!
 								</p>
@@ -64,25 +62,25 @@ function VerifyEmailSuccess() {
 							<button
 								type="button"
 								onClick={() => navigate({ to: "/dashboard" })}
-								className="w-full bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+								className="flex w-full items-center justify-center gap-2 rounded-lg bg-linear-to-r from-purple-600 to-blue-600 px-6 py-3 font-semibold text-white shadow-lg transition-all duration-200 hover:from-purple-700 hover:to-blue-700 hover:shadow-xl"
 							>
 								Continue to Dashboard
-								<ArrowRight className="w-5 h-5" />
+								<ArrowRight className="h-5 w-5" />
 							</button>
 
 							<button
 								type="button"
 								onClick={() => navigate({ to: "/" })}
-								className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
+								className="flex w-full items-center justify-center gap-2 rounded-lg bg-gray-100 px-6 py-3 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-200"
 							>
-								<Home className="w-5 h-5" />
+								<Home className="h-5 w-5" />
 								Go to Home
 							</button>
 						</div>
 
 						{/* Auto redirect notice */}
 						<div className="mt-6 text-center">
-							<p className="text-sm text-gray-500">
+							<p className="text-gray-500 text-sm">
 								Automatically redirecting to login in{" "}
 								<span className="font-semibold text-purple-600">
 									{countdown}
@@ -95,9 +93,12 @@ function VerifyEmailSuccess() {
 
 				{/* Additional Info */}
 				<div className="mt-6 text-center">
-					<p className="text-sm text-gray-600">
+					<p className="text-gray-600 text-sm">
 						Need help?{" "}
-						<a href="#" className="text-purple-600 hover:text-purple-700 font-medium">
+						<a
+							href="#"
+							className="font-medium text-purple-600 hover:text-purple-700"
+						>
 							Contact Support
 						</a>
 					</p>
