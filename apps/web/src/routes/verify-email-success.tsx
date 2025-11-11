@@ -16,7 +16,7 @@ function VerifyEmailSuccess() {
 			setCountdown((prev) => {
 				if (prev <= 1) {
 					clearInterval(timer);
-					navigate({ to: "/login" });
+					navigate({ to: "/dashboard" });
 					return 0;
 				}
 				return prev - 1;
@@ -63,10 +63,10 @@ function VerifyEmailSuccess() {
 						<div className="space-y-3">
 							<button
 								type="button"
-								onClick={() => navigate({ to: "/login" })}
+								onClick={() => navigate({ to: "/dashboard" })}
 								className="w-full bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
 							>
-								Continue to Login
+								Continue to Dashboard
 								<ArrowRight className="w-5 h-5" />
 							</button>
 
