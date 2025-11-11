@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
-// import { createRemoteJWKSet, jwtVerify } from "jose";
+import { createRemoteJWKSet, jwtVerify } from "jose";
 import { getUser } from "@/functions/get-user";
 import { useTRPC } from "@/utils/trpc";
 
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/dashboard")({
 		// // the token should be sent by the fe to the other be then verified using this
 		// if (jwtToken) {
 		// 	const JWKS = createRemoteJWKSet(
-		// 		new URL(`http://localhost:3000/api/auth/jwks`),
+		// 		new URL(`${import.meta.env.VITE_SSO_URL}/api/auth/jwks`),
 		// 	);
 		// 	const { payload, protectedHeader, key } = await jwtVerify(
 		// 		jwtToken,
