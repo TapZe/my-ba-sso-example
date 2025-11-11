@@ -2,7 +2,7 @@ import prisma from "@my-sso/db";
 import argon2 from "argon2";
 import { type BetterAuthOptions, betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { admin, customSession, jwt } from "better-auth/plugins";
+import { admin, customSession, jwt, username } from "better-auth/plugins";
 import { sendEmail } from "./email";
 import { getVerificationEmailTemplate } from "./email-templates";
 import { ac, adminRole, hrAdminRole, userRole } from "./roles";
@@ -36,16 +36,9 @@ export const auth = betterAuth({
 		sendOnSignUp: true,
 		sendVerificationEmail: async ({ user, url, token }, request) => {
 			try {
-				// Construct callback URL to redirect after successful verification
-				const clientUrl = process.env.CORS_ORIGIN || "http://localhost:3001";
-				const callbackURL = `${clientUrl}/verify-email-success`;
-				
-				// Append callbackURL to the verification URL
-				const verificationUrlWithCallback = `${clientUrl}/api/auth/verify-email?token=${token}&callbackURL=${encodeURIComponent(callbackURL)}`;
-
 				const html = getVerificationEmailTemplate({
 					userName: user.name,
-					verificationUrl: verificationUrlWithCallback,
+					verificationUrl: url, // change callback on the client (front end)
 					appName: "My SSO App",
 				});
 
@@ -154,5 +147,6 @@ export const auth = betterAuth({
 			bannedUserMessage: "You have been banned for suspicious activity",
 		}),
 		jwt(),
+		username(),
 	],
 } satisfies BetterAuthOptions);
