@@ -64,12 +64,38 @@ export const auth = betterAuth({
 		afterEmailVerification: async (user, request) => {
 			// Custom logic after successful email verification
 			console.log(`✅ Email verified successfully for user: ${user.email}`);
-			
-			// You can add custom logic here, such as:
-			// - Send welcome email
-			// - Grant access to premium features
-			// - Log the event to analytics
-			// - Update user metadata
+
+			// Example implementations:
+
+			// 1. Send welcome email
+			// try {
+			// 	const welcomeHtml = getWelcomeEmailTemplate({ userName: user.name });
+			// 	await sendEmail({
+			// 		to: user.email,
+			// 		subject: "Welcome to My SSO App!",
+			// 		html: welcomeHtml,
+			// 	});
+			// } catch (error) {
+			// 	console.error("Failed to send welcome email:", error);
+			// }
+
+			// 2. Update user metadata or grant premium features
+			// if (user.email.endsWith("@yourcompany.com")) {
+			// 	await prisma.user.update({
+			// 		where: { id: user.id },
+			// 		data: {
+			// 			role: "hr_admin", // Auto-promote company emails to HR admin
+			// 		},
+			// 	});
+			// 	console.log(`🎉 Granted HR admin role to ${user.email}`);
+			// }
+
+			// 3. Log to analytics/monitoring
+			// await analytics.track({
+			// 	userId: user.id,
+			// 	event: "email_verified",
+			// 	properties: { email: user.email },
+			// });
 		},
 		autoSignInAfterVerification: true,
 		expiresIn: 60 * 60, // 1 hour
