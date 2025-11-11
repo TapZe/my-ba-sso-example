@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { createRemoteJWKSet, jwtVerify } from "jose";
+// import { createRemoteJWKSet, jwtVerify } from "jose";
 import { getUser } from "@/functions/get-user";
 import { useTRPC } from "@/utils/trpc";
 
