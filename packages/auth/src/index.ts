@@ -3,6 +3,8 @@ import argon2 from "argon2";
 import { type BetterAuthOptions, betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { admin, customSession, jwt } from "better-auth/plugins";
+import { sendEmail } from "./email";
+import { getVerificationEmailTemplate } from "./email-templates";
 import { ac, adminRole, hrAdminRole, userRole } from "./roles";
 
 const ARGON2_MEMORY_COST = Number(process.env.ARGON2_MEMORY_COST ?? 2 ** 16);
@@ -17,6 +19,7 @@ export const auth = betterAuth({
 	trustedOrigins: [process.env.CORS_ORIGIN || ""],
 	emailAndPassword: {
 		enabled: true,
+		requireEmailVerification: true,
 		password: {
 			hash: async (password) =>
 				argon2.hash(password + PASSWORD_PEPPER, {
@@ -28,6 +31,48 @@ export const auth = betterAuth({
 			verify: async ({ password, hash }) =>
 				argon2.verify(hash, password + PASSWORD_PEPPER),
 		},
+	},
+	emailVerification: {
+		sendOnSignUp: true,
+		sendVerificationEmail: async ({ user, url, token }, request) => {
+			try {
+				// Construct callback URL to redirect after successful verification
+				const clientUrl = process.env.CORS_ORIGIN || "http://localhost:3001";
+				const callbackURL = `${clientUrl}/verify-email-success`;
+				
+				// Append callbackURL to the verification URL
+				const verificationUrlWithCallback = `${clientUrl}/api/auth/verify-email?token=${token}&callbackURL=${encodeURIComponent(callbackURL)}`;
+
+				const html = getVerificationEmailTemplate({
+					userName: user.name,
+					verificationUrl: verificationUrlWithCallback,
+					appName: "My SSO App",
+				});
+
+				await sendEmail({
+					to: user.email,
+					subject: "Verify your email address",
+					html,
+				});
+
+				console.log(`Verification email sent to ${user.email}`);
+			} catch (error) {
+				console.error("Failed to send verification email:", error);
+				throw error;
+			}
+		},
+		afterEmailVerification: async (user, request) => {
+			// Custom logic after successful email verification
+			console.log(`✅ Email verified successfully for user: ${user.email}`);
+			
+			// You can add custom logic here, such as:
+			// - Send welcome email
+			// - Grant access to premium features
+			// - Log the event to analytics
+			// - Update user metadata
+		},
+		autoSignInAfterVerification: true,
+		expiresIn: 60 * 60, // 1 hour
 	},
 	session: {
 		expiresIn: 60 * 60 * 24 * 7, // 1 week
