@@ -30,6 +30,7 @@ export default function SignUpForm({
 					email: value.email,
 					password: value.password,
 					name: value.name,
+					callbackURL: `${window.location.origin}/verify-email-success`,
 				},
 				{
 					onSuccess: () => {
