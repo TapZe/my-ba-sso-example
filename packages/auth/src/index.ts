@@ -93,13 +93,23 @@ export const auth = betterAuth({
 		autoSignInAfterVerification: true,
 		expiresIn: 60 * 60, // 1 hour
 	},
+	// session: {
+	// 	expiresIn: 60 * 60 * 24 * 7, // 1 week
+	// 	updateAge: 60 * 15, // 15 minutes
+	// 	freshAge: 60 * 60, // 1 hour
+	// 	cookieCache: {
+	// 		enabled: true,
+	// 		maxAge: 60 * 5, // 5 minutes
+	// 	},
+	// },
+	//* 30 minutes session with 5 minutes update age
 	session: {
-		expiresIn: 60 * 60 * 24 * 7, // 1 week
-		updateAge: 60 * 15, // 15 minutes
+		expiresIn: 60 * 30, // 30 minutes
+		updateAge: 60 * 5, // refresh the session expiry every 5 minutes of activity
 		freshAge: 60 * 60, // 1 hour
 		cookieCache: {
 			enabled: true,
-			maxAge: 5 * 60, // 5 minutes
+			maxAge: 60 * 5, // 5 minutes
 		},
 	},
 	advanced: {
@@ -147,7 +157,11 @@ export const auth = betterAuth({
 			defaultRole: "user",
 			bannedUserMessage: "You have been banned for suspicious activity",
 		}),
-		jwt(),
+		jwt({
+			jwt: {
+				expirationTime: 60 * 5, // 5 minutes
+			}
+		}),
 		username(),
 	],
 } satisfies BetterAuthOptions);
