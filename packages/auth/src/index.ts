@@ -7,6 +7,7 @@ import { sendEmail } from "./email";
 import { getVerificationEmailTemplate } from "./email-templates";
 import { ac, adminRole, hrAdminRole, userRole } from "./roles";
 
+const APP_NAME = process.env.APP_NAME ?? "My SSO App";
 const ARGON2_MEMORY_COST = Number(process.env.ARGON2_MEMORY_COST ?? 2 ** 16);
 const ARGON2_TIME_COST = Number(process.env.ARGON2_TIME_COST ?? 3);
 const ARGON2_PARALLELISM = Number(process.env.ARGON2_PARALLELISM ?? 1);
@@ -34,12 +35,12 @@ export const auth = betterAuth({
 	},
 	emailVerification: {
 		sendOnSignUp: true,
-		sendVerificationEmail: async ({ user, url, token }, request) => {
+		sendVerificationEmail: async ({ user, url, token: _token }, _request) => {
 			try {
 				const html = getVerificationEmailTemplate({
 					userName: user.name,
 					verificationUrl: url, // change callback on the client (front end)
-					appName: "My SSO App",
+					appName: APP_NAME,
 				});
 
 				await sendEmail({
@@ -54,7 +55,7 @@ export const auth = betterAuth({
 				throw error;
 			}
 		},
-		afterEmailVerification: async (user, request) => {
+		afterEmailVerification: async (user, _request) => {
 			// Custom logic after successful email verification
 			console.log(`✅ Email verified successfully for user: ${user.email}`);
 
